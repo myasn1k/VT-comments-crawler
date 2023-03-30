@@ -6,11 +6,11 @@ elastic:
   username: user
   password: pass
   indexes:
-          ips: vt-comments-ips
-          graphs: vt-comments-graphs
-          files: vt-comments-files
-          domains: vt-comments-domains
-          urls: vt-comments-urls
+          ip_address: vt-comments-ip_address
+          graph: vt-comments-graph
+          file: vt-comments-file
+          domain: vt-comments-domain
+          url: vt-comments-url
 vt:
   key: XXXXX
   comment_authors:

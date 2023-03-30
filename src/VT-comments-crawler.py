@@ -20,7 +20,7 @@ def main(argv):
         Config["elastic"]["username"] + ":" +
         Config["elastic"]["password"] + "@" + 
         Config["elastic"]["host"] + ":" +
-        str(Config["elastic"]["port"])], http_compress=True, verify_certs=False, timeout=60)
+        str(Config["elastic"]["port"])], http_compress=True, verify_certs=False, request_timeout=60)
 
     comments = {}
     comment_authors = Config["vt"]["comment_authors"]
@@ -31,6 +31,12 @@ def main(argv):
         for comment in comments[author]:
             comment["item_related"] = vt.get_item_given_comment_id(comment["id"])
         logging.info(f"Retrieved all items related to author {author} comments")
+
+    for author, author_comments in comments.items():
+        for comment in author_comments:
+            comment["author"] = author
+            index = Config["elastic"]["indexes"][comment["data"]["type"]]
+            es.index(index=index, document=comment)
 
     logging.info("Finished")
 
