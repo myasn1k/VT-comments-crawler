@@ -20,7 +20,7 @@ def main(argv):
         Config["elastic"]["username"] + ":" +
         Config["elastic"]["password"] + "@" + 
         Config["elastic"]["host"] + ":" +
-        Config["elastic"]["port"]], http_compress=True, verify_certs=False, timeout=60)
+        str(Config["elastic"]["port"])], http_compress=True, verify_certs=False, timeout=60)
 
     comments = {}
     comment_authors = Config["vt"]["comment_authors"]
