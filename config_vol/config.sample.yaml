@@ -1,0 +1,19 @@
+---
+elastic:
+  proto: https
+  host: host
+  port: 9200
+  username: user
+  password: pass
+  indexes:
+          ips: vt-comments-ips
+          graphs: vt-comments-graphs
+          files: vt-comments-files
+          domains: vt-comments-domains
+          urls: vt-comments-urls
+vt:
+  key: XXXXX
+  comment_authors:
+          - author1
+          - author2
+          - ...
