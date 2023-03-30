@@ -33,10 +33,12 @@ def main(argv):
         logging.info(f"Retrieved all items related to author {author} comments")
 
     for author, author_comments in comments.items():
+        logging.info(f"Pushing comments found for the author {author} to elastic")
         for comment in author_comments:
             comment["author"] = author
-            index = Config["elastic"]["indexes"][comment["data"]["type"]]
+            index = Config["elastic"]["indexes"][comment["item_related"]["type"]]
             es.index(index=index, document=comment)
+    logging.info("Pushed all comments to elastic")
 
     logging.info("Finished")
 
