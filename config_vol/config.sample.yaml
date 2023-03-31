@@ -7,7 +7,7 @@ elastic:
   password: pass
   indexes:
           ip_address: vt-comments-ip_address
-          graph: vt-comments-graph
+          # graph: vt-comments-graph # Not supported, not useful
           file: vt-comments-file
           domain: vt-comments-domain
           url: vt-comments-url

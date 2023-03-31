@@ -6,6 +6,7 @@ from config import Config
 from vt import VT
 import sys
 from elasticsearch import Elasticsearch, helpers
+import formatting_funcs as ff
 
 logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -37,10 +38,10 @@ def main(argv):
     for author, author_comments in comments.items():
         logging.info(f"Pushing comments found for the author {author} to elastic")
         for comment in author_comments:
-            comment["author"] = author
-            id = comment.pop("id")
-            if "last_analysis_results" in comment["item_related"]["attributes"].keys():
-                del comment["item_related"]["attributes"]["last_analysis_results"]
+            if comment["item_related"]["type"] == "graph":
+                continue
+            id = ff.pop_id_set_author_reformat_comment(comment, author)
+            comment["item_related"] = ff.get_filtered_item_related(comment["item_related"])
             index = Config["elastic"]["indexes"][comment["item_related"]["type"]]
             es.index(index=index, id=id, document=comment)
     logging.info("Pushed all comments to elastic")
