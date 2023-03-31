@@ -45,7 +45,7 @@ def main(argv):
             comment["item_related"] = ff.get_filtered_item_related(comment["item_related"])
             es.index(index=index, id=id, document=comment)
     logging.info("Pushed all comments to elastic")
-    for index in Config["elastic"]["indexes"]:
+    for k, index in Config["elastic"]["indexes"].items():
         es.indices.refresh(index=index)
     logging.info("Refreshed all elastic indexes")
 
