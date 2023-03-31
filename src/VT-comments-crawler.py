@@ -40,9 +40,9 @@ def main(argv):
         for comment in author_comments:
             if comment["item_related"]["type"] == "graph":
                 continue
+            index = Config["elastic"]["indexes"][comment["item_related"]["type"]]
             id = ff.pop_id_set_author_reformat_comment(comment, author)
             comment["item_related"] = ff.get_filtered_item_related(comment["item_related"])
-            index = Config["elastic"]["indexes"][comment["item_related"]["type"]]
             es.index(index=index, id=id, document=comment)
     logging.info("Pushed all comments to elastic")
     for index in Config["elastic"]["indexes"]:
