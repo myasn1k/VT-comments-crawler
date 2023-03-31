@@ -38,10 +38,11 @@ def main(argv):
         logging.info(f"Pushing comments found for the author {author} to elastic")
         for comment in author_comments:
             comment["author"] = author
+            id = comment.pop("id")
             if "last_analysis_results" in comment["item_related"]["attributes"].keys():
                 del comment["item_related"]["attributes"]["last_analysis_results"]
             index = Config["elastic"]["indexes"][comment["item_related"]["type"]]
-            es.index(index=index, document=comment)
+            es.index(index=index, id=id, document=comment)
     logging.info("Pushed all comments to elastic")
     for index in Config["elastic"]["indexes"]:
         es.indices.refresh(index=index)
