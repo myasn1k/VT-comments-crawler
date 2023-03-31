@@ -10,10 +10,9 @@ def pop_id_set_author_reformat_comment(comment, author):
     return comment.pop("id")
 
 def get_filtered_file(file):
-    res["md5"] = file["attributes"].get("md5")
-    res["sha1"] = file["attributes"].get("sha1")
-    res["sha256"] = file["attributes"].get("sha256")
-    return res
+    return {"md5": file["attributes"].get("md5"),
+            "sha1": file["attributes"].get("sha1"),
+            "sha256": file["attributes"].get("sha256")}
 
 def get_filtered_domain(domain):
     return {"domain": domain["id"]}
