@@ -46,6 +46,9 @@ def main(argv):
             es.index(index=index, id=id, document=comment)
     logging.info("Pushed all comments to elastic")
     for k, index in Config["elastic"]["indexes"].items():
+        es.indices.put_mapping(index=index, properties={"date": {"type": "date", "format": "epoch_second"}})
+        if index == Config["elastic"]["indexes"]["ip_address"]:
+            es.indices.put_mapping(index=index, properties={"ip_address": {"type": "ip"}})
         es.indices.refresh(index=index)
     logging.info("Refreshed all elastic indexes")
 
