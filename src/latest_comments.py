@@ -15,7 +15,7 @@ def read_comments_file():
 
 def add_comment(author, id):
     with open(os.getenv("RW_DB_PATH"), "a+") as file:
-        file.write(author + " " + id + "\n")
+        file.write(author + " " + id)
 
 def update_comment(author, id):
     for line in fileinput.input(os.getenv("RW_DB_PATH"), inplace=True):
