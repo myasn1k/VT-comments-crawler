@@ -14,9 +14,11 @@ def read_comments_file():
         return {}
 
 def remove_empty_lines():
-    for line in fileinput.input(os.getenv("RW_DB_PATH"), inplace=True):
-        if line.rstrip():
-            print(line)
+    with open(os.getenv("RW_DB_PATH")) as reader, open(os.getenv("RW_DB_PATH"), 'r+') as writer:
+        for line in reader:
+            if line.strip():
+                writer.write(line)
+        writer.truncate()
 
 def add_comment(author, id):
     with open(os.getenv("RW_DB_PATH"), "a+") as file:
