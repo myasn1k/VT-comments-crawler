@@ -30,6 +30,8 @@ def get_latest_comment_by_author(author):
 
 def get_filtered_comments(author, comments):
     id = get_latest_comment_by_author(author)
+    if id == None:
+        return comments
     size = len(comments)
     idx_list = [idx + 1 for idx, val in
             enumerate(comments) if val["id"] == id]
