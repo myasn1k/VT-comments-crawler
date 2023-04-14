@@ -7,6 +7,7 @@ from vt import VT
 import sys
 from elasticsearch import Elasticsearch, helpers
 import formatting_funcs as ff
+import latest_comments as lc
 
 logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -29,11 +30,12 @@ def main(argv):
     comment_authors = Config["vt"]["comment_authors"]
     logging.info(f"Found {len(comment_authors)} comment authors")
     for author in comment_authors:
-        comments[author] = vt.get_user_comments(author)
+        comments[author] = lc.get_filtered_comments(author, vt.get_user_comments(author))
         logging.info(f"Found {len(comments[author])} comments for author {author}")
         for comment in comments[author]:
             comment["item_related"] = vt.get_item_given_comment_id(comment["id"])
         logging.info(f"Retrieved all items related to author {author} comments")
+        lc.save_latest_comment_for_author(author, comments[author])
 
     for author, author_comments in comments.items():
         logging.info(f"Pushing comments found for the author {author} to elastic")

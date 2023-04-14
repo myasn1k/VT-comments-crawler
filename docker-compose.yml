@@ -5,7 +5,9 @@ services:
     build: .
     volumes:
       - ./config_vol:/config
+      - ./db_vol:/db
       - ./src:/app
     environment:
       PYTHONUNBUFFERED: 1
       RW_CONFIG_PATH: /config/config.yaml
+      RW_DB_PATH: /db/latest_comments.txt

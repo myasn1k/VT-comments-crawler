@@ -1,3 +1,5 @@
 elasticsearch
+more_itertools
 PyYAML
 requests
+urllib3
