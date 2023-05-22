@@ -42,17 +42,12 @@ def get_filtered_comments(author, comments):
     if id == None:
         return comments
     size = len(comments)
-    idx_list = [idx + 1 for idx, val in
-            enumerate(comments) if val["id"] == id]
-    if len(idx_list) == 0:
-        return []
-    res = [comments[i: j] for i, j in
-            zip([0] + idx_list, idx_list +
-               ([size] if idx_list[-1] != size else []))]
-    if len(res) == 1:
-        return []
+    for i in range(size):
+        if comments[i]["id"] == id: break
+    if i == size - 1:
+        return comments
     else:
-        return res[0][:-1]
+        return comments[:i]
 
 def save_latest_comment_for_author(author, comments):
     if not comments:
